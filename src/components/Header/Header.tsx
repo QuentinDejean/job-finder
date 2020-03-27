@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import UserProfile from './UserProfile'
 
 const Container = styled.header`
-  background-color: #ddddd;
   padding: 15px;
 `
 
