@@ -6,9 +6,9 @@ import Header from './Header'
 import { skeletonId } from './constants'
 import { user } from './mock'
 
-describe('WHEN I visit the Job description page', () => {
+describe('WHEN I visit the Job page', () => {
   describe('AND I look at the header', () => {
-    it('THEN I should see a header loading state', () => {
+    it('THEN I should see a loading state', () => {
       const { getByTestId } = render(<Header />)
 
       expect(getByTestId(skeletonId)).toBeInTheDocument()
