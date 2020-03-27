@@ -5,7 +5,6 @@ import UserContext from 'utils/user'
 
 const AppContainer = styled.section`
   background-color: #f9f7fc;
-  margin-top: 10vh;
 `
 
 const userId = '7f90df6e-b832-44e2-b624-3143d428001f'

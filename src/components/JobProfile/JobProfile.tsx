@@ -9,6 +9,7 @@ import { skeletonId } from './constants'
 import Title from './Title/Title'
 
 import type { Title as TitleT } from './Title/Title'
+import Actions from './Actions/Actions'
 
 type Job = {
   jobId: string
@@ -70,6 +71,7 @@ const JobProfile = () => {
         {!!job && (
           <>
             <Title {...job.jobTitle} companyName={job.company.name} />
+            <Actions jobId={job.jobId} />
           </>
         )}
       </Container>
