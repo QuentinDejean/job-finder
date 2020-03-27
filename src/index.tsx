@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import theme from 'utils/theme'
 
 import './index.css'
-import App from './app/App'
+import App from './components/App'
 
 ReactDOM.render(
   <React.StrictMode>
