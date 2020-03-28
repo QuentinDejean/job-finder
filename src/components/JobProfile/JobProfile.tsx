@@ -3,12 +3,13 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import styled from 'styled-components'
 
 import HTTPClientContext from 'utils/httpClient'
+import JobSelectorContext from 'utils/jobSelector'
 
 import { skeletonId } from './constants'
+import Actions from './Actions/Actions'
 import Title from './Title/Title'
 
 import type { Title as TitleT } from './Title/Title'
-import Actions from './Actions/Actions'
 
 type Job = {
   jobId: string
@@ -44,12 +45,13 @@ const Container = styled.div`
 
 const JobProfile = () => {
   const [job, setJob] = useState<Job | undefined>(undefined)
+  const jobValue = useContext(JobSelectorContext)
   const axios = useContext(HTTPClientContext)
 
   useEffect(() => {
     async function getJobProfile() {
       const response = await axios.get('/matches')
-      setJob(response.data[1])
+      setJob(response.data[jobValue])
     }
 
     getJobProfile()
