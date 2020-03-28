@@ -65,7 +65,7 @@ const JobProfile = () => {
             data-testid={skeletonId}
             variant="rect"
             width="100%"
-            height={118}
+            height={562}
           />
         )}
         {!!job && (
