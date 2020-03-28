@@ -8,6 +8,7 @@ import Header from 'components/Header/Header'
 import JobProfile from 'components/JobProfile/JobProfile'
 import HTTPClientContext from 'utils/httpClient'
 import theme from 'utils/theme'
+import JobSelectorContext, { jobValue } from 'utils/jobSelector'
 
 import './index.css'
 import App from './components/App'
@@ -22,10 +23,12 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <HTTPClientContext.Provider value={axiosClient}>
-        <App>
-          <Header />
-          <JobProfile />
-        </App>
+        <JobSelectorContext.Provider value={jobValue}>
+          <App>
+            <Header />
+            <JobProfile />
+          </App>
+        </JobSelectorContext.Provider>
       </HTTPClientContext.Provider>
     </ThemeProvider>
   </React.StrictMode>,

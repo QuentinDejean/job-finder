@@ -5,6 +5,7 @@ import App from 'components/App'
 
 import theme from './theme'
 import HTTPClientContext, { AxiosMock } from './httpClient'
+import JobSelectorContext from './jobSelector'
 
 const axiosMock = (apiPayload?: any): AxiosMock => ({
   get: async () => ({ data: apiPayload }),
@@ -24,7 +25,9 @@ const AllTheProviders = (options?: Options) => ({ children }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <HTTPClientContext.Provider value={axiosClient}>
-        <App>{children}</App>
+        <JobSelectorContext.Provider value={0}>
+          <App>{children}</App>
+        </JobSelectorContext.Provider>
       </HTTPClientContext.Provider>
     </ThemeProvider>
   )
