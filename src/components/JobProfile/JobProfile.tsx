@@ -3,7 +3,6 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import styled from 'styled-components'
 
 import HTTPClientContext from 'utils/httpClient'
-import UserContext from 'utils/user'
 
 import { skeletonId } from './constants'
 import Title from './Title/Title'
@@ -46,15 +45,15 @@ const Container = styled.div`
 const JobProfile = () => {
   const [job, setJob] = useState<Job | undefined>(undefined)
   const axios = useContext(HTTPClientContext)
-  const userId = useContext(UserContext)
 
   useEffect(() => {
     async function getJobProfile() {
-      const response = await axios.get(`/api/worker/${userId}/matches`)
-      setJob(response.data[0])
+      const response = await axios.get('/matches')
+      setJob(response.data[1])
     }
 
     getJobProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

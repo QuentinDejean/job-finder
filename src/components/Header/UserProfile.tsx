@@ -3,7 +3,6 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import styled from 'styled-components'
 
 import HTTPClientContext from 'utils/httpClient'
-import UserContext from 'utils/user'
 import { skeletonId } from './constants'
 
 type Profile = {
@@ -17,18 +16,18 @@ const ProfileContainer = styled.div`
 
 const UserProfile = () => {
   const axios = useContext(HTTPClientContext)
-  const userId = useContext(UserContext)
 
   const [userProfile, setUserProfile] = useState<Profile | undefined>(undefined)
 
   useEffect(() => {
     async function getProfile() {
-      const response = await axios.get(`/api/worker/${userId}/profile`)
+      const response = await axios.get('/profile')
 
       setUserProfile(response.data)
     }
 
     getProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

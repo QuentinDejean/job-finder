@@ -12,8 +12,10 @@ import theme from 'utils/theme'
 import './index.css'
 import App from './components/App'
 
+const userId = '7f90df6e-b832-44e2-b624-3143d428001f'
+
 const axiosClient = axios.create({
-  baseURL: environment.api,
+  baseURL: `${environment.api}/${userId}/`,
 })
 
 ReactDOM.render(

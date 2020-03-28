@@ -22,7 +22,7 @@ describe('GIVEN I am on the Job description page', () => {
 
       const {
         jobTitle: { name },
-      } = jobs[0]
+      } = jobs[1]
 
       await waitFor(() => expect(getByText(name)).toBeInTheDocument())
     })
