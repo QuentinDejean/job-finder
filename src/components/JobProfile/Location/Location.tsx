@@ -30,7 +30,7 @@ const Location = ({ address, distance }: Props) => {
             <small>Location</small>
           </strong>
           <Address>{address}</Address>
-          <Distance>{distance} away from your seach location</Distance>
+          <Distance>{distance} miles away from your seach location</Distance>
         </div>
       </div>
     </Item>
