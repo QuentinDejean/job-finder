@@ -7,13 +7,15 @@ import JobSelectorContext from 'utils/jobSelector'
 
 import { skeletonId } from './constants'
 import Actions from './Actions/Actions'
+import Location from './Location/Location'
 import Title from './Title/Title'
-
-import type { Title as TitleT } from './Title/Title'
 
 type Job = {
   jobId: string
-  jobTitle: TitleT
+  jobTitle: {
+    name: string
+    imageUrl: string
+  }
   company: {
     name: string
     address: {
@@ -72,6 +74,10 @@ const JobProfile = () => {
         {!!job && (
           <>
             <Title {...job.jobTitle} companyName={job.company.name} />
+            <Location
+              address={job.company.address.formattedAddress}
+              distance={job.milesToTravel}
+            />
             <Actions jobId={job.jobId} />
           </>
         )}

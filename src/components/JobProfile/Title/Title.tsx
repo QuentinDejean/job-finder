@@ -39,5 +39,4 @@ const Title = ({ companyName, imageUrl, name }: Props) => {
   )
 }
 
-export type { Title }
 export default Title
