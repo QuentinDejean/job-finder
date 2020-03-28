@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import UserProfile from './UserProfile'
 
 const Container = styled.header`
-  padding: 15px;
+  padding: 5px 15px;
 `
 
 const BoxContainer = styled(Box)`

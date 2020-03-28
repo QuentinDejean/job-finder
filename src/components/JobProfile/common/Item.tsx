@@ -12,12 +12,13 @@ const Info = styled.div`
 
 type Props = {
   children: React.ReactNode
+  showDivider?: boolean
 }
 
-const Item = ({ children }: Props) => {
+const Item = ({ children, showDivider }: Props) => {
   return (
     <Container>
-      <Divider />
+      {showDivider && <Divider />}
       <Info>
         <Box display="flex" alignItems="center">
           {children}
@@ -25,6 +26,10 @@ const Item = ({ children }: Props) => {
       </Info>
     </Container>
   )
+}
+
+Item.defaultProps = {
+  showDivider: true,
 }
 
 export default Item
