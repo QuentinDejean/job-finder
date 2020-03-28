@@ -88,4 +88,32 @@ describe('GIVEN I am on the Job description page', () => {
       })
     })
   })
+
+  describe('AND I declined a job', () => {
+    describe('WHEN the success notification appears', () => {
+      describe('AND I click the close button', () => {
+        it.skip('THEN the notification no longer shows on the screen', async () => {
+          const apiPayload = { success: true }
+          const { getByText, getByRole, queryByTestId } = render(
+            <Actions jobId={jobId} />,
+            {
+              apiPayload,
+            }
+          )
+
+          fireEvent.click(getByText(declineJobLabel))
+
+          await waitFor(() =>
+            expect(getByText(jobDeclinedSuccessMessage)).toBeInTheDocument()
+          )
+
+          fireEvent.click(getByRole('presentation'))
+
+          await waitFor(() =>
+            expect(queryByTestId(notificationId)).not.toBeInTheDocument()
+          )
+        })
+      })
+    })
+  })
 })
