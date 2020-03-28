@@ -8,6 +8,8 @@ import JobSelectorContext from 'utils/jobSelector'
 import { skeletonId } from './constants'
 import Actions from './Actions/Actions'
 import Location from './Location/Location'
+import Report from './Report/Report'
+import Requirements from './Requirements/Requirement'
 import Title from './Title/Title'
 
 type Job = {
@@ -24,17 +26,11 @@ type Job = {
     }
     reportTo: {
       name: string
-      phone: string
+      phone?: string
     }
   }
   wagePerHourInCents: number
   milesToTravel: number
-  shifts: [
-    {
-      startDate: string
-      endDate: string
-    }
-  ]
 }
 
 const Layout = styled.div`
@@ -78,6 +74,11 @@ const JobProfile = () => {
               address={job.company.address.formattedAddress}
               distance={job.milesToTravel}
             />
+            <Report
+              manager={job.company.reportTo.name}
+              phone={job.company.reportTo.phone}
+            />
+            <Requirements />
             <Actions jobId={job.jobId} />
           </>
         )}

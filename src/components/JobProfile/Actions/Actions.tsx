@@ -23,7 +23,7 @@ type ActionState = {
 }
 
 const BoxContainer = styled(Box)`
-  padding: 15px;
+  padding: 10px 15px 15px;
   width: 50%;
 `
 
