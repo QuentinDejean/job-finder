@@ -11,6 +11,7 @@ import Location from './Location/Location'
 import Report from './Report/Report'
 import Requirements from './Requirements/Requirement'
 import Title from './Title/Title'
+import Distance from './Distance/Distance'
 
 type Job = {
   jobId: string
@@ -70,6 +71,10 @@ const JobProfile = () => {
         {!!job && (
           <>
             <Title {...job.jobTitle} companyName={job.company.name} />
+            <Distance
+              distance={job.milesToTravel}
+              salary={job.wagePerHourInCents}
+            />
             <Location
               address={job.company.address.formattedAddress}
               distance={job.milesToTravel}

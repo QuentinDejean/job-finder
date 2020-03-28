@@ -22,7 +22,7 @@ type Props = {
 
 const Location = ({ address, distance }: Props) => {
   return (
-    <Item>
+    <Item showDivider={false}>
       <Icon fontSize="large" />
       <div>
         <div>
