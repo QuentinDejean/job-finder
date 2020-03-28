@@ -1,10 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { Box, Button, Snackbar } from '@material-ui/core'
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
+import React, { useContext, useState } from 'react'
+import { Box, Button } from '@material-ui/core'
 
 import styled from 'styled-components'
 
 import HTTPClientContext from 'utils/httpClient'
+
+import Notification from './Notification'
+import { declineJobLabel, acceptJobLabel } from './constants'
 
 type Props = {
   jobId: string
@@ -13,8 +15,11 @@ type Props = {
 type ActionState = {
   isPerformingAction: boolean
   isAccepted: boolean
-  isRejected: boolean
-  hasError: boolean
+  isDeclined: boolean
+  hasError?: {
+    alreadyTaken: boolean
+    unknown: boolean
+  }
 }
 
 const BoxContainer = styled(Box)`
@@ -22,72 +27,92 @@ const BoxContainer = styled(Box)`
   width: 50%;
 `
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
-
 const defaultState: ActionState = {
   isPerformingAction: false,
   isAccepted: false,
-  isRejected: false,
-  hasError: false,
+  isDeclined: false,
+  hasError: undefined,
 }
 
 const Actions = ({ jobId }: Props) => {
   const axios = useContext(HTTPClientContext)
 
-  const [actionJob, setJobAction] = useState<ActionState>({
-    isPerformingAction: false,
-    isAccepted: false,
-    isRejected: false,
-    hasError: false,
-  })
+  const [actionJob, setJobAction] = useState<ActionState>(defaultState)
 
   const acceptJob = async () => {
-    try {
-      setJobAction({
-        ...defaultState,
-        isPerformingAction: true,
-      })
+    setJobAction({
+      ...defaultState,
+      isPerformingAction: true,
+    })
 
-      await axios.get(`/job/${jobId}/accept`)
+    const {
+      data: { success },
+    } = await axios.get(`/job/${jobId}/accept`)
 
-      setJobAction({
-        ...defaultState,
-        isAccepted: true,
-      })
-    } catch (e) {
-      setJobAction({
-        ...defaultState,
-        hasError: true,
-      })
-    }
+    setJobAction({
+      ...defaultState,
+      ...(success
+        ? {
+            isAccepted: true,
+          }
+        : {
+            hasError: { alreadyTaken: true, unknown: false },
+          }),
+    })
   }
+
+  const declineJob = async () => {
+    setJobAction({
+      ...defaultState,
+      isPerformingAction: true,
+    })
+
+    const {
+      data: { success },
+    } = await axios.get(`/job/${jobId}/reject`)
+
+    setJobAction({
+      ...defaultState,
+      ...(success
+        ? {
+            isDeclined: true,
+          }
+        : {
+            hasError: { alreadyTaken: false, unknown: true },
+          }),
+    })
+  }
+
+  const { isPerformingAction, isAccepted, isDeclined, hasError } = actionJob
 
   return (
     <>
-      {/* <Snackbar
-        open
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity="success">This is a success message!</Alert>
-      </Snackbar> */}
+      <Notification
+        isAccepted={isAccepted}
+        isDeclined={isDeclined}
+        hasError={hasError}
+        onClose={() => setJobAction(defaultState)}
+      />
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <BoxContainer>
-          <Button variant="outlined" fullWidth>
-            No Thanks
+          <Button
+            disabled={isPerformingAction}
+            onClick={declineJob}
+            variant="outlined"
+            fullWidth
+          >
+            {declineJobLabel}
           </Button>
         </BoxContainer>
         <BoxContainer>
           <Button
-            disabled={actionJob.isPerformingAction}
+            disabled={isPerformingAction}
             onClick={acceptJob}
             variant="contained"
             color="primary"
             fullWidth
           >
-            I'll take it
+            {acceptJobLabel}
           </Button>
         </BoxContainer>
       </Box>
