@@ -49,7 +49,7 @@ const JobProfile = () => {
   useEffect(() => {
     async function getJobProfile() {
       const response = await axios.get('/matches')
-      setJob(response.data[0])
+      setJob(response.data[1])
     }
 
     getJobProfile()
